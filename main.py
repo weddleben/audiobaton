@@ -38,9 +38,13 @@ def convert_audio(input_file, format):
     ffmpeg = FFMPEG()
     ffmpeg.input_file = input_file
     ffmpeg.output_file = create_converted_filename(file=input_file, format=format)
-    ffmpeg.convert()
-    status_label.config(text="")
-    messagebox.showinfo("info", f"file create: {ffmpeg.output_file}")
+    try:
+        ffmpeg.convert()
+        status_label.config(text="")
+        messagebox.showinfo("info", f"file create: {ffmpeg.output_file}")
+    except:
+        messagebox.showerror("error", "could not convert!")
+        selected_file.set("")
 
 def run_conversion():
     file = selected_file.get()
