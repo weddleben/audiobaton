@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import font
 from tkinter import ttk
 from tkinter import filedialog, messagebox
+import webbrowser
 
 from audio import FFMPEG
 
@@ -14,6 +15,7 @@ def check_for_ffmpeg():
         label_ffmpeg.config(text="FFmpeg installed and working!")
     except:
         label_ffmpeg.config(text="It appears FFmpeg is not installed. This makes us sad :(")
+        webbrowser.open("https://www.google.com/search?q=how+to+install+ffmpeg")
 
     label_ffmpeg.after(3000, lambda: label_ffmpeg.config(text=""))
 
