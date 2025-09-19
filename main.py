@@ -50,6 +50,9 @@ def convert_audio(input_file, format):
 
 def get_audio_length():
         file = selected_file.get()
+        if not file:
+            length_label.config(text="no file selected!")
+            length_label.after(3000, lambda: length_label.config(text=""))
         ffmpeg = FFMPEG()
         ffmpeg.input_file = file
         duration = ffmpeg.get_length_in_minutes()
