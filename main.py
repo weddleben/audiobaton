@@ -53,11 +53,16 @@ def get_audio_length():
         if not file:
             length_label.config(text="no file selected!")
             length_label.after(3000, lambda: length_label.config(text=""))
+            return
         ffmpeg = FFMPEG()
         ffmpeg.input_file = file
-        duration = ffmpeg.get_length_in_minutes()
-        duration = f"{duration} minutes"
-        length_label.config(text=duration)
+        try:
+            duration = ffmpeg.get_length_in_minutes()
+            duration = f"{duration} minutes"
+            length_label.config(text=duration)
+        except:
+            length_label.config(text="???")
+            length_label.after(3000, lambda: length_label.config(text=""))
 
 def run_conversion():
     file = selected_file.get()
