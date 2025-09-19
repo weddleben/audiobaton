@@ -45,6 +45,7 @@ def convert_audio(input_file, format):
     except:
         messagebox.showerror("error", "could not convert!")
         selected_file.set("")
+        status_label.config(text="")
 
 def run_conversion():
     file = selected_file.get()
