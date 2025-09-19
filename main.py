@@ -33,6 +33,7 @@ def open_file():
     )
     if file:
         selected_file.set(file)
+        length_label.config(text="")
 
 def convert_audio(input_file, format):
     ffmpeg = FFMPEG()
@@ -46,6 +47,14 @@ def convert_audio(input_file, format):
         messagebox.showerror("error", "could not convert!")
         selected_file.set("")
         status_label.config(text="")
+
+def get_audio_length():
+        file = selected_file.get()
+        ffmpeg = FFMPEG()
+        ffmpeg.input_file = file
+        duration = ffmpeg.get_length_in_minutes()
+        duration = f"{duration} minutes"
+        length_label.config(text=duration)
 
 def run_conversion():
     file = selected_file.get()
@@ -62,7 +71,7 @@ def run_conversion():
 
 root = tk.Tk()
 root.title("Audio Converter")
-root.geometry("700x300")
+root.geometry("700x400")
 
 button_font = font.Font(family="Arial", size=16 , weight="bold")
 
@@ -89,8 +98,11 @@ tk.Label(root, text="Output format:").pack(pady=5)
 tk.OptionMenu(root, output_format, "mp3", "wav", "flac", "ogg", "aac").pack(pady=5)
 
 ttk.Button(root, text="Convert", command=run_conversion, style="My.TButton").pack(pady=10)
-
 status_label = tk.Label(root, text="")
 status_label.pack(pady=5)
+
+ttk.Button(root, text="Get Length", command=get_audio_length, state="My.TButton").pack()
+length_label = tk.Label(root, text="")
+length_label.pack()
 
 root.mainloop()
